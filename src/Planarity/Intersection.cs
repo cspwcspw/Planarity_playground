@@ -66,7 +66,8 @@ namespace Planarity
             // we might deliberately have same points of intersection.
             // Once we have a too-big planar graph we'll throw excess nodes away
             int numLines = 2;
-            while (numLines * (numLines - 1) < numVerts * 2)
+            //   while (numLines * (numLines - 1) < numVerts * 2)
+            while (numLines * (numLines - 1) < numVerts * 4)
             {
                 numLines++;
             }

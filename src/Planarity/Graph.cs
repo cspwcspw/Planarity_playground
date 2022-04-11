@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Windows;
 using System.Windows.Shapes;
 
 // Written by Pete, March/April 2022.
@@ -27,15 +28,23 @@ namespace Planarity
 
         MainWindow parent;
 
-
+        int numVerticesWanted;
+        int seedUsed;
         Random rnd;   // We will own and control the random generator for test repeatability purposes
 
         public Graph(MainWindow parent, int numVerticesWanted)
         {
             this.parent = parent;
+            // Double-stage the setup of rnd so that I can accurately reproduce situations of interest.
+            //numVerticesWanted = 7;
+            Random r2 = new Random();
+            seedUsed = r2.Next(100);
+            //seedUsed = 45;
+            //numVerticesWanted = 6;
+            this.numVerticesWanted = numVerticesWanted;
 
-            //  rnd = new Random(41);  Repeatable case
-            rnd = new Random(); // Real game situation
+
+            rnd = new Random(seedUsed);
             List<Intersection> crossings = Intersection.generateIntersectionsFromRandomLines(rnd, numVerticesWanted);
 
             Vertices = new List<Vertex>();
@@ -91,8 +100,29 @@ namespace Planarity
                 Tuple<Vertex, Vertex> pairToFold = findAdjacentVertexPair();
                 combineNodes(pairToFold.Item1, pairToFold.Item2);
                 parent.say(Dump());
+
+                //if (hasNodeOfDegreeOne())
+                //{
+                //    parent.say($"Got case when reducing to {Vertices.Count}\n after folding {pairToFold} {pairToFold.Item1} & {pairToFold.Item2}\n");                
+                //}
             }
         }
+
+        //private bool hasNodeOfDegreeOne()
+        //{
+        //    foreach (Vertex v in Vertices)
+        //    {
+        //        List<Edge> inEs = findInEdges(v);
+        //        List<Edge> outEs = findOutEdges(v);
+        //        if (inEs.Count + outEs.Count == 1)
+        //        {
+        //            parent.say($"Problem vertex is {v}\n");
+        //            return true;
+        //        }
+        //    }
+
+        //    return false;
+        //}
 
         private void combineNodes(Vertex me, Vertex other)
         {
@@ -124,13 +154,22 @@ namespace Planarity
                 Vertex otherSrc = e.VFrom;
                 if (otherSrc == me)
                 {
+                    string msg = $"Problem case: seedUsed={seedUsed}, numverticesWanted={numVerticesWanted} Vertices.Count={Vertices.Count}\n";
+                    parent.say(msg);
+                    MessageBox.Show(msg);
                     Debug.Assert(false);
                 }
                 else
                 {
                     if (me.vNum < otherSrc.vNum)
                     {
-                        if (haveOutEdgeTo(me, e.VTo))
+
+                        //if (other.vNum == 7)
+                        //{
+                        //    string s = "Problem";
+                        //}
+
+                        if (haveOutEdgeTo(me, e.VFrom))
                         {
                             Edges.Remove(e);
                         }

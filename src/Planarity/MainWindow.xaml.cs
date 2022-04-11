@@ -135,9 +135,11 @@ namespace Planarity
         private void Help_Click(object sender, RoutedEventArgs e)
         {
             string helpText =
-                "Drag the nodes about so that no lines cross each other.\n" +
+                "Drag the nodes (disks) about so that no lines cross each other.\n" +
                 "\nUse the Mouse Wheel to zoom in or out." +
-                "\nDragging with the Right mouse button held down moves the whole graph." +
+                "\nDragging the mouse while holding down the Right Mouse Button moves everything." +
+                "\n\nMy game generator occasionally leaves nodes out on a limb." +
+                "It is a bit quirky, so I call it a 'feature', not a bug." +
                 "\n\nRead about Planarity at Wikipedia." +
                 "\nJason Davies has a great version that runs in a browser.";
 
