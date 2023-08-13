@@ -8,6 +8,8 @@ using System.Windows.Threading;
 using Xceed.Wpf.Toolkit;
 
 // Pete, March/April 2022. 
+// Played Aug 23, this comment creates a trivial change that will allow me to 
+// verify that my ssh keys work ok on github. 
 
 namespace Planarity
 {
@@ -15,7 +17,7 @@ namespace Planarity
     public partial class MainWindow : Window
     {
 
-        public const double VSz = 32;
+        public const double VSz = 36;
         public const double HalfVSz = VSz / 2.0;
 
         Brush VNormalFill = Brushes.LightBlue;
@@ -139,7 +141,7 @@ namespace Planarity
                 "\nUse the Mouse Wheel to zoom in or out." +
                 "\nDragging the mouse while holding down the Right Mouse Button moves everything." +
                 "\n\nMy game generator occasionally leaves nodes out on a limb." +
-                "It is a bit quirky, so I call it a 'feature', not a bug." +
+                "\nIt is a bit quirky, so I call it a 'feature', not a bug." +
                 "\n\nRead about Planarity at Wikipedia." +
                 "\nJason Davies has a great version that runs in a browser.";
 
@@ -180,7 +182,7 @@ namespace Planarity
         #region Create UI Widgets and place them when game starts. They are not installed on the playground canvas intially.
         internal Shape MakeNodeWidget(Vertex vertex)
         {
-            Shape widget = new Ellipse() { Fill = VNormalFill, Stroke = VStroke, Width = VSz, Height = VSz, ToolTip=$"{vertex.vNum}", Tag= vertex };
+            Shape widget = new Ellipse() { Fill = VNormalFill, Stroke = VStroke, Width = VSz, Height = VSz, ToolTip=$"{vertex.vNum}", Tag= vertex};
             widget.MouseEnter += V_MouseEnter;   // Attach handlers to every node we create.
             widget.MouseLeave += V_MouseLeave;
             widget.MouseDown += V_MouseDown;
